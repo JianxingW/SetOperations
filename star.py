@@ -159,17 +159,6 @@ def Limit2string(lim):
                 result+=' or ' + (mid0+str(lim_i[0])+', '+str(lim_i[1])+mid3)         
     return result
 
-def trim_csv(x):
-    '''
-    description: 
-    专用函数，请忽略
-    '''
-    mid=x['载荷提供故障值'].values
-    index=[]
-    for i in mid:
-        index.append('x' in i)
-    return x[index] 
-
 def IsSubset(lim1, lim2):
     '''
     description: 
@@ -226,8 +215,7 @@ def Complement(lim0):
     if len(lim)==1:
         lim=lim[0]
     return lim     
-
-#列表表达式取交集                            
+                        
 def Intersections(limits, another_limits=None):
     '''
     description: 
