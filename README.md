@@ -1,4 +1,4 @@
-# SetOperations
+# SetOperations.py
 Operations of set.
 
 A series of function used for operations of set. For example, calculation of union, intersection, complement of sets, and so on.
