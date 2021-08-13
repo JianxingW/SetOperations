@@ -1,5 +1,3 @@
-import numpy as np
-
 def ListDim(alist):
     '''
     description: 
@@ -77,7 +75,7 @@ def Limit2Expression(constraints):
     约束区间[[0, 10, 1, 0], [20, 30, 1, 1],...]翻译为0<=x<10 or 20<=x<=30...
     '''
     mid=[]
-    dim=np.array(constraints).ndim
+    dim=ListDim(constraints)
     if dim==1:
         expres=_Limit2Expression_single(constraints)
     else:
@@ -98,7 +96,7 @@ def _Limit2Expression_single(constraints):
     约束区间[0, 10, 1, 0]翻译为0<=x<10 
     constraints：必须写成1维列表形式[0, 10, 1, 0]否则触发异常
     '''
-    if np.array(constraints).ndim>1:
+    if ListDim(constraints)>1:
         raise Exception('The input parameter should be a 1D list!')
     elif constraints==[]:
         expre=[]
@@ -125,7 +123,7 @@ def _Limit2Expression_single(constraints):
             expre=expre1+'x'+expre2
     return expre
 
-def Limit_list2string(lim):
+def Limit2string(lim):
     '''
     description: 
     约束区间转换为表达式
@@ -135,7 +133,7 @@ def Limit_list2string(lim):
     result=''
     if lim==[]:
         result=[]
-    elif len(lim)==4:    # np.array(lists).ndim=1
+    elif ListDim(lim)==1:    # np.array(lists).ndim=1
         if lim[2]==0:
             mid0='('
         else:
@@ -193,11 +191,11 @@ def Complement(lim0):
     单个区间直接给出lim0=[0, 10, 1, 1],或者[[0, 10, 1, 1]](不推荐)
     多个区间必须以2D列表给出, [[0, 10, 1, 1], [20, 30, 1, 1]]
     '''
-    dim=np.array(lim0).ndim
+    dim=ListDim(lim0)
     lim=[]
     if (dim==2) and (len(lim0)==1):
         lim0=lim0[0]
-        dim=np.array(lim0).ndim
+        dim=ListDim(lim0)
     if lim0==[]:
         lim=[-float('inf'), float('inf'), 0, 0]
     elif dim==1:
@@ -310,10 +308,10 @@ def _Intersection_singles(limit1, limit2):
     dim1, dim2 = ListDim(lim1), ListDim(lim2)
     if (dim1==2) and (len(limit1)==1):
         lim1=limit1[0]
-        dim1 = np.array(lim1).ndim
+        dim1 = ListDim(lim1)
     if (dim2==2) and (len(limit2)==1):
         lim2=limit2[0]
-        dim2 = np.array(lim2).ndim
+        dim2 = ListDim(lim2)
     
     if dim1+dim2==2:
         if lim1==[] or lim2==[]:
@@ -361,8 +359,8 @@ def UnionSets(limits, another_limits=None):
     
     if another_limits!=None:
         limits=[limits, another_limits]
-    #bug: np.array([[[1,2,3], [4,5,6]], [1,5,6]]).ndim=1   wjx:2021-8-10
-    if np.array(limits).ndim==1 and (type(limits[0]) in [int, float]):
+    # bug: np.array([[[1,2,3], [4,5,6]], [1,5,6]]).ndim=1   wjx:2021-8-10
+    if ListDim(limits)==1:
         limits=[limits]
     limit=[]
     for limit_i in limits:
@@ -382,7 +380,7 @@ def UnionSet(limit1, limit2):
     limit2：[5, 20, 0, 0]/...
     '''
     lim1, lim2=limit1.copy(), limit2.copy()
-    dim1, dim2=np.array(limit1).ndim, np.array(limit2).ndim
+    dim1, dim2=ListDim(limit1), ListDim(limit2)
     if dim1==2:
         mid=[]
         for i, lim1_i in enumerate(limit1):
