@@ -233,8 +233,7 @@ def Complement(lim0):
     if len(lim)==1:
         lim=lim[0]
     return lim     
-
-#列表表达式取交集                            
+                           
 def Intersections(limits, another_limits=None):
     '''
     description: 
