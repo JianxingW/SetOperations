@@ -349,7 +349,7 @@ def _Intersection_singles(limit1, limit2):
         raise Exception('Single intervals should be provided!')
     return lim
 
-def Unions(limits, another_limits=None):
+def UnionSets(limits, another_limits=None):
     '''
     description: 
     多个区间求并集, limits为嵌套列表形式，每个元素为约束区间, 每个约束区间不限制单区间(1/2维列表皆可)
@@ -371,12 +371,12 @@ def Unions(limits, another_limits=None):
     limit=[]
     for limit_i in limits:
         if type(limit_i)==list:
-            limit=Union(limit, limit_i)
+            limit=UnionSet(limit, limit_i)
 #         else:   #如果limits中包含非list值处理方式  忽略?
 #             raise Exception('The given parameter should be a 2D list!')
     return limit
 
-def Union(limit1, limit2):
+def UnionSet(limit1, limit2):
     '''
     description: 
     两个区间求交集, 不限制单区间(1/2维列表皆可)
