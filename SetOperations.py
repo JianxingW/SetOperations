@@ -1,15 +1,18 @@
-> sss
 def ListDim(alist):
     '''
     description: 
-    判断列表维度
-    原则：列表中元素全部为数值型或字符串类型，则为1D列表；否则为2D列表
+    获得列表维度
+    原则为：若list中元素全部为int/float/string,则为1D列表，否则为2D
+    string：'x>=10', 'x>10 or x<100....', ...
     '''
-    types=[type(i) in [int, float, str] for i in alist]
-    if sum(types)==len(alist):
+    type1=[type(i) in [int, float, str] for i in alist]
+    type2=[type(i) in [list] for i in alist]
+    if sum(type1)==len(alist):
         return 1
+    elif sum(type1)==len(alist):
+        return 2 
     else:
-        return 2  
+        raise Exception('Please give the right expressions!')  
     
 def Expression2Limit(string):
     '''
