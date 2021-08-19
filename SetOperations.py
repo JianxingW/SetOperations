@@ -372,7 +372,7 @@ def Unions(limits, another_limits=None):
     limit=[]
     for limit_i in limits:
         if type(limit_i)==list:
-            limit=UnionSet(limit, limit_i)
+            limit=Union(limit, limit_i)
 #         else:   #如果limits中包含非list值处理方式  忽略?
 #             raise Exception('The given parameter should be a 2D list!')
     return limit
