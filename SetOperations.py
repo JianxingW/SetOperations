@@ -12,7 +12,7 @@ def ListDim(alist):
     type2=[type(i) in [list] for i in alist]
     if sum(type1)==len(alist):
         return 1
-    elif sum(type1)==len(alist):
+    elif sum(type2)==len(alist):
         return 2 
     else:
         raise Exception('Please give the right expressions!') 
