@@ -15,7 +15,7 @@ def ListDim(alist):
     elif sum(type2)==len(alist):
         return 2 
     else:
-        raise Exception('Please give the right expressions!') 
+        raise Exception('Please give the right expressions!')        
     
 def Expression2Limit(string):
     '''
@@ -30,8 +30,7 @@ def Expression2Limit(string):
             lim.append(_Expression2Limit_single(i))
     else:
         lim=_Expression2Limit_single(string)
-    return lim
-
+    return lim 
 def _Expression2Limit_single(string):
     '''
     description: 
@@ -72,6 +71,30 @@ def _Expression2Limit_single(string):
             lim[2]=1
         if '=' in string.split('<')[2]:  # x(...)10<=20
             lim[3]=1
+    return lim
+
+def String2Limit(string):
+    """
+    description: 
+    字符串表达式转换为约束区间
+    str='(1, 2]'/'[1, 2] or (4, 5]'
+    result=[1,2,0,1]/[[1,2,1,1], [4,5,0,1],...] 
+    """
+    if 'or' not in string:
+        s=string.replace(' ', '').split(',')
+        if s[0][1:].isdigit() and s[1][:-1].isdigit():
+            lim=[float(s[0][1:]), float(s[1][:-1]), int(string[0]=='['), int(string[-1]==']')]
+        else:
+            lim=[s[0][1:], s[1][:-1], int(string[0]=='['), int(string[-1]==']')]
+    else:
+        lim=[]
+        s=string.replace(' ', '').split('or')
+        for i, si in enumerate(s):
+            si=si.split(',')
+            if si[1].isdigit() and si[3].isdigit():
+                lim.append([float(si[0][1:]), float(si[1][:-1]), int(s[0]=='['), int(s[-1]==']')])
+            else:
+                lim.append([si[0][1:], si[1][:-1], int(s[0]=='['), int(s[-1]==']')])
     return lim
 
 def Limit2Expression(constraints):
@@ -130,7 +153,7 @@ def _Limit2Expression_single(constraints):
             expre=expre1+'x'+expre2
     return expre
 
-def Limit2string(lim):
+def Limit2String(lim):
     '''
     description: 
     约束区间转换为表达式
@@ -165,17 +188,6 @@ def Limit2string(lim):
             else:
                 result+=' or ' + (mid0+str(lim_i[0])+', '+str(lim_i[1])+mid3)         
     return result
-
-def trim_csv(x):
-    '''
-    description: 
-    专用函数，请忽略
-    '''
-    mid=x['载荷提供故障值'].values
-    index=[]
-    for i in mid:
-        index.append('x' in i)
-    return x[index] 
 
 def IsSubset(lim1, lim2):
     '''
